@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend API server for INFO1998 A5",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wwang99/info1998-a5.git"
+  },
+  "author": "Will Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wwang99/info1998-a5/issues"
+  },
+  "homepage": "https://github.com/wwang99/info1998-a5#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  }
+}
