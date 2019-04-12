@@ -22,6 +22,7 @@ class App extends Component {
     handleEmailChange = event => {
         this.setState({ emailValue: event.target.value });
     }
+    
     handleSubmit = async event => {
         await fetch(`/api/add-contact-card`, {
             method: 'POST',
