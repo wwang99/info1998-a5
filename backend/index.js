@@ -1,46 +1,50 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const admin = require('firebase-admin');
+const serviceAccount = require('./service-account.json');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let data = [];
-
-app.get('/api/contact-cards', (req, res) => {
-    res.send(data);
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://info1998-a6.firebaseio.com"
 });
 
-app.post('/api/add-contact-card', (req, res, next) => {
+const db = admin.firestore();
+
+const dataCollection = db.collection('data');
+
+app.get('/api/contact-cards', async (_, res) => {
+    const data = await dataCollection.get();
+    res.json(data.docs.map(doc => doc.data()));
+});
+
+app.post('/api/add-contact-card', async (req, res, next) => {
     if (!req.body.name || !req.body.email) {
         next(new Error("Invalid request body"));
     }
     else {
-        let valid = true;
-        data.forEach(elt => {
-            if (elt.email === req.body.email) {
-                valid = false;
-            }
-        });
-
+        const data = await dataCollection.get();
+        let valid = data.docs.some(doc => doc.get('email') === req.body.email);
         if (valid) {
-            data.push({ name: req.body.name, email: req.body.email });
-            res.send("OK");
-        }
-        else {
-            res.send("NOT_OK");
+            res.send('NOT_OK');
+        } else {
+            await dataCollection.add({ name: req.body.name, email: req.body.email });
+            res.send('OK');
         }
     }
 });
 
 // 404, no matching route found
-app.use((req, res) => {
+app.use((_, res) => {
     res.status(404).send("Invalid API route");
 });
 
 // route for handling errors
-app.use((err, req, res) => {
+app.use((err, _, res) => {
     res.status(400).send(err);
 });
 
