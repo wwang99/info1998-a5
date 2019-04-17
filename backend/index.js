@@ -28,8 +28,8 @@ app.post('/api/add-contact-card', async (req, res, next) => {
     }
     else {
         const data = await dataCollection.get();
-        let valid = data.docs.some(doc => doc.get('email') === req.body.email);
-        if (valid) {
+        let invalid = data.docs.some(doc => doc.get('email') === req.body.email);
+        if (invalid) {
             res.send('NOT_OK');
         } else {
             await dataCollection.add({ name: req.body.name, email: req.body.email });
