@@ -19,7 +19,7 @@ const dataCollection = db.collection('data');
 
 app.get('/api/contact-cards', async (_, res) => {
     const data = await dataCollection.get();
-    res.json(data.docs.map(doc => doc.data()));
+    res.json(data.docs.map(doc => ({ id: doc.id, ...doc.data() })));
 });
 
 app.post('/api/add-contact-card', async (req, res, next) => {

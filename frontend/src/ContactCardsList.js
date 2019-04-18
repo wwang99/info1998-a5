@@ -25,7 +25,7 @@ class ContactCardsList extends Component {
                 <h1>Contact Cards</h1>
                 <div className="ContactCardsContainer">
                     {
-                        fetched ? (data.length !== 0 ? data.map(elt => <ContactCard name={elt.name} email={elt.email} />) : <p>No contact cards</p>) : <p>Loading...</p>
+                        fetched ? (data.length !== 0 ? data.map(elt => <ContactCard key={elt.id} name={elt.name} email={elt.email} />) : <p>No contact cards</p>) : <p>Loading...</p>
                     }
                 </div>
             </div>
