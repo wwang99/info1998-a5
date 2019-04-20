@@ -37,7 +37,7 @@ class ContactCardAdder extends Component {
                 <input className="InputBox" type="text" onChange={this.handleNameChange} />
                 <h3>Email</h3>
                 <input className="InputBox" type="text" onChange={this.handleEmailChange} />
-                <button type="submit" className="Button">Submit</button>
+                <button className="Button">Submit</button>
             </form>
         );
     }
